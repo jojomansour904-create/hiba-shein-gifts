@@ -54,11 +54,26 @@ const prizes = [
   "خصم 5% عند الشراء فوق مبلغ معيّن 🎀",
   "اشتري بـ200 شيكل أو أكثر واربحِي هدية بكج 🎁",
   "توصيل مجاني 🚚",
-  "قسيمة شرائية 🛍️"
+  "قسيمة شرائية عند التسوق بـ 200 شيكل أو أكثر 🛍️"
 ];
 
+// التحقق مما إذا كانت الزبونة قد حصلت على جائزة مسبقاً
+window.onload = function() {
+  const savedPrize = localStorage.getItem('userPrize');
+  if (savedPrize) {
+    document.getElementById("prize").textContent = savedPrize;
+    document.getElementById("prize").style.display = "block";
+    document.getElementById("reveal").style.display = "none";
+    document.getElementById("instagram").style.display = "block";
+  }
+};
+
 function showPrize(){
-  const prize = prizes[Math.floor(Math.random() * prizes.length)];
+  let prize = localStorage.getItem('userPrize');
+  if (!prize) {
+    prize = prizes[Math.floor(Math.random() * prizes.length)];
+    localStorage.setItem('userPrize', prize);
+  }
   document.getElementById("prize").textContent = prize;
   document.getElementById("prize").style.display = "block";
   document.getElementById("reveal").style.display = "none";
